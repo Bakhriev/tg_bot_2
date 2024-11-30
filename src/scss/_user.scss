@@ -1,0 +1,285 @@
+.user-wrapper {
+  margin-bottom: 12px;
+  padding-top: 16px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &__pic-container {
+    width: 56px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+  }
+
+  &__pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__info {
+  }
+
+  &__name {
+    margin-bottom: 2px;
+
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  &__id {
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.wallet-wrapper {
+  margin-bottom: 8px;
+}
+
+.wallet {
+  border-radius: 10px;
+  padding: 14px 0px 14px 12px;
+  background-color: #fff;
+  &__title {
+    margin-bottom: 4px;
+
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  &__info {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  &__icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  &__amount {
+    transform: translateY(4px);
+    font-weight: 600;
+    font-size: 24px;
+  }
+
+  &__currency {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+}
+
+.arrow-btn {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  border-radius: 10px;
+  padding: 9px 10px;
+  background-color: #fff;
+  &__icon {
+    width: 10px;
+    height: 10px;
+  }
+}
+.tab {
+  &__btns {
+    margin-bottom: 12px;
+
+    display: flex;
+    background-color: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  &__btn {
+    flex-grow: 1;
+    border-radius: 14px;
+    padding: 8px 2px;
+    background: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: rgba(0, 0, 0, 0.4);
+
+    &.active {
+      background-color: #17222d;
+      color: #fff;
+    }
+  }
+
+  &__content {
+  }
+}
+
+.order {
+  border-radius: 10px;
+  padding: 16px 12px;
+  background-color: #fff;
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+
+  &__id {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  &__date {
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  &__status {
+    margin-bottom: 16px;
+
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  &__items {
+    margin-bottom: 16px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  &__btn {
+  }
+}
+
+.transaction-card {
+  border-radius: 10px;
+  padding: 8px 12px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  &__icon {
+  }
+
+  &__price {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  &__text {
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+.deposit {
+  &__title {
+    margin-bottom: 16px;
+
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+  }
+
+  &__box {
+  }
+
+  &__label {
+    margin-bottom: 4px;
+
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+  &__field {
+    margin-bottom: 4px;
+
+    border-radius: 10px;
+    padding: 12px 12px;
+    background: #fff;
+
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  &__hints {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  &__hint {
+    border-radius: 4px;
+    padding: 4px 8px;
+    background: #fff;
+
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+
+    flex-grow: 1;
+    &:active {
+      scale: 0.97;
+    }
+  }
+}

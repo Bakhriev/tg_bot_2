@@ -1,0 +1,39 @@
+html {
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: normal;
+  font-weight: 400;
+  color: #000;
+}
+
+.app {
+  overflow: hidden;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 368px;
+  width: 100%;
+
+  padding: 0 20px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text {
+  font-size: 12px;
+  text-align: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.mb-8 {
+  margin-bottom: 8px;
+}
+.mb-12 {
+  margin-bottom: 12px;
+}

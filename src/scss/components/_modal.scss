@@ -1,0 +1,72 @@
+.modal {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  padding-top: 85px;
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-bottom: 50px;
+
+  display: grid;
+  overflow: auto;
+
+  opacity: 0;
+  pointer-events: none;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: opacity 150ms ease-in-out, visibility 150ms ease-in-out;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.modal-card {
+  max-width: 280px;
+  height: max-content;
+  margin: 0 auto;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 24px 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  &__top {
+    margin: 0 auto;
+    max-width: 220px;
+  }
+
+  &__title {
+    margin-bottom: 10px;
+    font-weight: 800;
+    font-size: 24px;
+    text-align: center;
+    color: #000;
+  }
+
+  &__text {
+    margin-bottom: 24px;
+
+    font-weight: 400;
+    font-size: 14px;
+    text-align: center;
+    color: #000;
+  }
+
+  &__btns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__btn {
+  }
+}

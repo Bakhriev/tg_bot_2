@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/scss/main.scss" />
+  </head>
+  <body>
+    <div id="app" class="app">
+      <div class="container">
+        <div class="content">
+          <div class="step-container">
+            <div class="step" data-step="0" data-visible="true">
+              <div class="step__inner">
+                <div class="progress-bar">
+                  <div class="progress-bar__item" data-active="true"></div>
+                  <div class="progress-bar__item" data-active="false"></div>
+                </div>
+
+                <div class="step__top">
+                  <div class="title">
+                    Введите Email <br />
+                    от Supercell ID
+                  </div>
+
+                  <div class="text-center">
+                    Чтобы завершить заказ и отправить его на исполнение
+                  </div>
+                </div>
+
+                <div class="step__body">
+                  <input
+                    type="email"
+                    class="input input-reset"
+                    placeholder="example@mail.ru"
+                    id="email"
+                  />
+                  <button class="btn btn-reset" data-step-next-btn>
+                    Продолжить
+                  </button>
+                </div>
+
+                <div class="step__bottom">
+                  <a href="#" class="btn-basic btn-reset" data-help-btn=""
+                    >Нужна помощь?</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="step" data-step="1" data-visible="false">
+              <div class="step__inner">
+                <div class="progress-bar">
+                  <div class="progress-bar__item" data-active="false"></div>
+                  <div class="progress-bar__item" data-active="true"></div>
+                </div>
+
+                <div class="step__top">
+                  <div class="title">Введите код</div>
+                  <div class="text-center">
+                    Код подтверждения был отправлен на <span
+                      data-email-display
+                    ></span
+                    >. Он нужен, чтобы мы могли войти в ваш игровой аккаунт
+                    и исполнить заказ
+                  </div>
+                </div>
+
+                <div class="step__body">
+                  <div class="code-wrapper">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        inputmode="numeric"
+                        class="code input-reset"
+                        maxlength="1"
+                        placeholder="Х"
+                      />
+
+                      <input
+                        type="text"
+                        inputmode="numeric"
+                        class="code input-reset"
+                        maxlength="1"
+                        placeholder="Х"
+                      />
+
+                      <input
+                        type="text"
+                        inputmode="numeric"
+                        class="code input-reset"
+                        maxlength="1"
+                        placeholder="Х"
+                      />
+                    </div>
+
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        inputmode="numeric"
+                        class="code input-reset"
+                        maxlength="1"
+                        placeholder="Х"
+                      />
+
+                      <input
+                        type="text"
+                        inputmode="numeric"
+                        class="code input-reset"
+                        maxlength="1"
+                        placeholder="Х"
+                      />
+
+                      <input
+                        type="text"
+                        inputmode="numeric"
+                        class="code input-reset"
+                        maxlength="1"
+                        placeholder="Х"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="button-group">
+                    <button class="btn btn-reset" data-submit-btn>
+                      Завершить
+                    </button>
+                    <button class="btn-secondary btn-reset" data-step-prev-btn>
+                      Назад
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--  -->
+              <div class="resend-wrapper hidden mt-24">
+                <div>Не пришел код?</div>
+                <button class="btn-basic btn-reset" data-resend-btn>
+                  Отправить новый
+                </button>
+              </div>
+              <div class="text-center text mt-24 hidden" data-timer-text>
+                Код отправлен. Повторная отправка будет доступна через
+                <span></span>
+                секунд
+              </div>
+              <!--  -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" data-modal="error">
+        <div class="modal-card">
+          <div class="modal-card__top">
+            <div class="modal-card__title">Ошибка!</div>
+            <p class="modal-card__text" data-modal-error-text>
+              Проверьте и введите корректный. Если код не пришел, проверьте
+              почту Supercell ID и запросите новый.
+            </p>
+          </div>
+
+          <div class="modal-card__btns">
+            <button class="modal-card__btn btn btn-reset" data-destroyer>
+              Ок
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

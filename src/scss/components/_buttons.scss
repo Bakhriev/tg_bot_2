@@ -1,0 +1,33 @@
+.btn {
+  height: 40px;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #17222d;
+  color: #fff;
+  &:active {
+    scale: 0.99;
+  }
+}
+
+.btn-basic {
+  font-weight: 700;
+  font-size: 12px;
+  text-align: center;
+  color: #17222d;
+  transition: color 50ms ease-in-out;
+
+  &:active {
+    color: #456b92;
+  }
+}
+
+.btn-secondary {
+  border: 1px solid #17222d;
+  border-radius: 8px;
+  padding: 10px;
+  height: 40px;
+  color: #17222d;
+  &:active {
+    scale: 0.99;
+  }
+}
