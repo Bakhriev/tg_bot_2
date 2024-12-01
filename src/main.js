@@ -316,6 +316,8 @@ const getOrders = async (currentPage) => {
         {}
       )
       .then((res) => {
+        console.log(`orders response: ${res}`);
+
         return res.orders;
       });
   } catch (error) {
@@ -379,6 +381,8 @@ const renderOrders = (data) => {
 
 const initOrders = async (currentPage) => {
   const data = await getOrders(currentPage);
+  console.log(`orders response data from init orders: ${data}`);
+
   const orders = data.rows;
 
   if (!orders.length && currentPage === 1) {
@@ -404,25 +408,3 @@ ordersUploadBtn.addEventListener("click", async () => {
   await initOrders(currentPage);
   ordersUploadBtn.classList.remove("loading");
 });
-
-// let exampleResponse = {
-//   ok: true,
-//   orders: [
-//     {
-//       order_id: "652c1aiorsje5ibn488jgu56",
-//       order_serial_number: 20000,
-//       created_at: {
-//         date: "2024-11-23 10:02:39.000000",
-//         timezone_type: 1,
-//         timezone: "+00:00",
-//       },
-//       client_id: "652c0fe0zmnnv3y043tj3533",
-//       order_status_code: "ORDER_PENDING",
-//       order_status_name: "Ожидает оплаты",
-//       order_status_color: "#DC3545",
-//       total_amount: 1,
-//       cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
-//     },
-//   ],
-//   total_count: 2, // Кол-во заказов в базе данных по текущему клиенту
-// };
