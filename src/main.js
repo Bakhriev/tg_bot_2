@@ -322,54 +322,8 @@ const getOrders = async (currentPage) => {
     console.error("Error getting orders:", error);
     return {
       ok: true,
-      rows: [
-        {
-          order_id: "652c1aiorsje5ibn488jgu56",
-          order_serial_number: 10000,
-          created_at: {
-            date: "2024-11-23 10:02:39.000000",
-            timezone_type: 1,
-            timezone: "+00:00",
-          },
-          client_id: "652c0fe0zmnnv3y043tj3533",
-          order_status_code: "ORDER_PENDING",
-          order_status_name: "Ожидает оплаты",
-          order_status_color: "#DC3545",
-          total_amount: 1,
-          cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
-        },
-        {
-          order_id: "652c1aiorsje5ibn488jgu56",
-          order_serial_number: 20000,
-          created_at: {
-            date: "2024-11-23 10:02:39.000000",
-            timezone_type: 1,
-            timezone: "+00:00",
-          },
-          client_id: "652c0fe0zmnnv3y043tj3533",
-          order_status_code: "ORDER_PENDING",
-          order_status_name: "Ожидает оплаты",
-          order_status_color: "#DC3545",
-          total_amount: 1,
-          cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
-        },
-        {
-          order_id: "652c1aiorsje5ibn488jgu56",
-          order_serial_number: 30000,
-          created_at: {
-            date: "2024-11-23 10:02:39.000000",
-            timezone_type: 1,
-            timezone: "+00:00",
-          },
-          client_id: "652c0fe0zmnnv3y043tj3533",
-          order_status_code: "ORDER_PENDING",
-          order_status_name: "Ожидает оплаты",
-          order_status_color: "#DC3545",
-          total_amount: 1,
-          cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
-        },
-      ],
-      total_count: 3, // Кол-во заказов в базе данных по текущему клиенту;
+      rows: [],
+      total_count: 0, // Кол-во заказов в базе данных по текущему клиенту;
     };
   }
 };
