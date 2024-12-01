@@ -1,102 +1,5 @@
-.user-wrapper {
-  margin-bottom: 12px;
-  padding-top: 16px;
-}
-
-.user {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  &__pic-container {
-    width: 56px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background-color: #d9d9d9;
-  }
-
-  &__pic {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  &__info {
-  }
-
-  &__name {
-    margin-bottom: 2px;
-
-    font-weight: 700;
-    font-size: 14px;
-  }
-
-  &__id {
-    font-weight: 400;
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.6);
-  }
-}
-
-.wallet-wrapper {
-  margin-bottom: 8px;
-}
-
-.wallet {
-  border-radius: 10px;
-  padding: 14px 0px 14px 12px;
-  background-color: #fff;
-  &__title {
-    margin-bottom: 4px;
-
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-  }
-
-  &__info {
-    display: flex;
-    align-items: flex-end;
-    gap: 5px;
-  }
-
-  &__icon {
-    width: 18px;
-    height: 18px;
-  }
-
-  &__amount {
-    transform: translateY(4px);
-    font-weight: 600;
-    font-size: 24px;
-  }
-
-  &__currency {
-    font-weight: 700;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-  }
-}
-
-.arrow-btn {
-  font-weight: 700;
-  font-size: 12px;
-  letter-spacing: 0.04em;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 100%;
-  border-radius: 10px;
-  padding: 9px 10px;
-  background-color: #fff;
-  &__icon {
-    width: 10px;
-    height: 10px;
-  }
-}
 .tab {
+  padding: 50px 0;
   &__btns {
     margin-bottom: 12px;
 
@@ -108,6 +11,7 @@
 
   &__btn {
     flex-grow: 1;
+    width: 50%;
     border-radius: 14px;
     padding: 8px 2px;
     background: #fff;
@@ -122,7 +26,11 @@
     }
   }
 
-  &__content {
+  &__panel {
+    display: none;
+    &[data-visible="true"] {
+      display: block;
+    }
   }
 }
 
@@ -282,4 +190,25 @@
       scale: 0.97;
     }
   }
+}
+
+.orders-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.orders-empty {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 134%;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.orders-upload {
+  &[data-visible="false"] {
+    display: none;
+  }
+  order: 1;
 }

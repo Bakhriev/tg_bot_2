@@ -239,7 +239,7 @@ nextBtn?.addEventListener("click", handleNextStep);
 
 submitBtn?.addEventListener("click", compareCode);
 
-resendBtn.addEventListener("click", async () => {
+resendBtn?.addEventListener("click", async () => {
   submitBtn.classList.add("loading");
 
   const { secondsPassed } = await getInfo();
@@ -275,3 +275,200 @@ const showHelpPopup = () => {
 
 const helpBtns = document.querySelectorAll("[data-help-btn]");
 helpBtns.forEach((helpBtn) => helpBtn.addEventListener("click", showHelpPopup));
+
+// Tabs
+const tabInit = () => {
+  const tab = document.querySelector(".tab");
+  const panels = tab?.querySelectorAll(".tab__panel");
+  const btns = tab?.querySelectorAll(".tab__btn");
+
+  btns?.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      btns.forEach((btn) => btn.classList.remove("active"));
+      btn.classList.add("active");
+      changeTab(index);
+    });
+  });
+
+  const changeTab = (index) => {
+    panels.forEach((panel, i) => {
+      panel.dataset.visible = i === index ? "true" : "false";
+    });
+  };
+};
+
+tabInit();
+
+const ordersContainer = document.querySelector(".orders-container");
+const ordersUploadBtn = document.querySelector(".orders-upload");
+let currentPage = 1;
+
+const getOrders = async (currentPage) => {
+  try {
+    await page
+      .executeBackendScenario(
+        params.scenario,
+        {
+          client_id: params.client_id.toString(),
+          limit: params.limit,
+          page: currentPage,
+        },
+        {}
+      )
+      .then((res) => {
+        return res.orders;
+      });
+  } catch (error) {
+    console.error("Error getting orders:", error);
+    return {
+      ok: true,
+      rows: [
+        {
+          order_id: "652c1aiorsje5ibn488jgu56",
+          order_serial_number: 10000,
+          created_at: {
+            date: "2024-11-23 10:02:39.000000",
+            timezone_type: 1,
+            timezone: "+00:00",
+          },
+          client_id: "652c0fe0zmnnv3y043tj3533",
+          order_status_code: "ORDER_PENDING",
+          order_status_name: "Ожидает оплаты",
+          order_status_color: "#DC3545",
+          total_amount: 1,
+          cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
+        },
+        {
+          order_id: "652c1aiorsje5ibn488jgu56",
+          order_serial_number: 20000,
+          created_at: {
+            date: "2024-11-23 10:02:39.000000",
+            timezone_type: 1,
+            timezone: "+00:00",
+          },
+          client_id: "652c0fe0zmnnv3y043tj3533",
+          order_status_code: "ORDER_PENDING",
+          order_status_name: "Ожидает оплаты",
+          order_status_color: "#DC3545",
+          total_amount: 1,
+          cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
+        },
+        {
+          order_id: "652c1aiorsje5ibn488jgu56",
+          order_serial_number: 30000,
+          created_at: {
+            date: "2024-11-23 10:02:39.000000",
+            timezone_type: 1,
+            timezone: "+00:00",
+          },
+          client_id: "652c0fe0zmnnv3y043tj3533",
+          order_status_code: "ORDER_PENDING",
+          order_status_name: "Ожидает оплаты",
+          order_status_color: "#DC3545",
+          total_amount: 1,
+          cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
+        },
+      ],
+      total_count: 3, // Кол-во заказов в базе данных по текущему клиенту;
+    };
+  }
+};
+
+const createOrderCard = (data) => {
+  const order = document.createElement("div");
+
+  order.className = "order";
+  order.innerHTML = `
+    <div class="order__top">
+      <div class="order__id order__title">
+        Заказ <span>№${data.order_serial_number}</span>
+      </div>
+      <div class="order__date">
+        <span>${data.created_at.date.slice(
+          0,
+          10
+        )}</span> <span>${data.created_at.date.slice(11, 16)}</span>
+      </div>
+    </div>
+
+    <div class="order__status" style="color: ${data.order_status_color}">${
+    data.order_status_name
+  }</div>
+
+    <div class="order__title mb-12">Состав заказа:</div>
+
+    <div class="order__items">
+      <div class="order__text">
+        ${data.cart_items_text}
+      </div>
+    </div>
+
+    <div class="order__bottom">
+      <div class="order__title">Сумма:</div>
+      <div class="order__title">${data.total_amount} ₽</div>
+    </div>
+
+    <button class="order__btn btn w-full btn-reset">
+      Оплатить
+    </button>
+`;
+
+  return order;
+};
+
+const renderOrders = (data) => {
+  for (let i = 0; i < 5; i++) {
+    const orderCard = createOrderCard(data[i]);
+    ordersContainer.appendChild(orderCard);
+  }
+};
+
+const initOrders = async (currentPage) => {
+  const data = await getOrders(currentPage);
+  const orders = data.rows;
+
+  if (!orders.length && currentPage === 1) {
+    const text = document.createElement("div");
+    text.innerHTML = `Здесь пока ничего нет. <br> Вперед за покупками!`;
+    text.className = "orders-empty";
+    ordersContainer.appendChild(text);
+  }
+
+  if (orders.length < 5) {
+    ordersUploadBtn.setAttribute("data-visible", "false");
+  }
+
+  renderOrders(orders);
+};
+
+initOrders(currentPage);
+
+ordersUploadBtn.addEventListener("click", async () => {
+  currentPage++;
+
+  ordersUploadBtn.classList.add("loading");
+  await initOrders(currentPage);
+  ordersUploadBtn.classList.remove("loading");
+});
+
+// let exampleResponse = {
+//   ok: true,
+//   orders: [
+//     {
+//       order_id: "652c1aiorsje5ibn488jgu56",
+//       order_serial_number: 20000,
+//       created_at: {
+//         date: "2024-11-23 10:02:39.000000",
+//         timezone_type: 1,
+//         timezone: "+00:00",
+//       },
+//       client_id: "652c0fe0zmnnv3y043tj3533",
+//       order_status_code: "ORDER_PENDING",
+//       order_status_name: "Ожидает оплаты",
+//       order_status_color: "#DC3545",
+//       total_amount: 1,
+//       cart_items_text: "Brawl Stars - 30 гемов | 1 шт. | 1 руб.",
+//     },
+//   ],
+//   total_count: 2, // Кол-во заказов в базе данных по текущему клиенту
+// };
