@@ -1,9 +1,9 @@
 .btn {
-  height: 40px;
   border-radius: 8px;
   padding: 10px;
   background-color: #17222d;
   color: #fff;
+  text-align: center;
   &:active {
     scale: 0.99;
   }
@@ -25,8 +25,8 @@
   border: 1px solid #17222d;
   border-radius: 8px;
   padding: 10px;
-  height: 40px;
   color: #17222d;
+  text-align: center;
   &:active {
     scale: 0.99;
   }

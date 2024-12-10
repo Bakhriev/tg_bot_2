@@ -276,54 +276,35 @@ const showHelpPopup = () => {
 const helpBtns = document.querySelectorAll("[data-help-btn]");
 helpBtns.forEach((helpBtn) => helpBtn.addEventListener("click", showHelpPopup));
 
-// Tabs
-const tabInit = () => {
-  const tab = document.querySelector(".tab");
-  const panels = tab?.querySelectorAll(".tab__panel");
-  const btns = tab?.querySelectorAll(".tab__btn");
-
-  btns?.forEach((btn, index) => {
-    btn.addEventListener("click", () => {
-      btns.forEach((btn) => btn.classList.remove("active"));
-      btn.classList.add("active");
-      changeTab(index);
-    });
-  });
-
-  const changeTab = (index) => {
-    panels.forEach((panel, i) => {
-      panel.dataset.visible = i === index ? "true" : "false";
-    });
-  };
-};
-
-tabInit();
+// User page
 
 const ordersContainer = document.querySelector(".orders-container");
 const ordersUploadBtn = document.querySelector(".orders-upload");
-let currentPage = 1;
+let currentPage = 0;
+
+ordersContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("order__btn")) {
+    window.location.href = `${window.location.hostname}${e.target.dataset.href}`;
+  }
+});
 
 const getOrders = async (currentPage) => {
   try {
-    await page
-      .executeBackendScenario(
-        params.scenario,
-        {
-          client_id: params.client_id.toString(),
-          limit: params.limit,
-          page: currentPage,
-        },
-        {}
-      )
-      .then((res) => {
-        console.log(`orders response: ${res}`);
-
-        return res.orders;
-      });
+    const response = await page.executeBackendScenario(
+      params.scenarioOrders,
+      {
+        client_id: params.clientId.toString(),
+        limit: params.limit,
+        page: currentPage,
+      },
+      {}
+    );
+    console.log(`getOrders Response: ${response}`);
+    return response;
   } catch (error) {
     console.error("Error getting orders:", error);
     return {
-      ok: true,
+      ok: false,
       rows: [],
       total_count: 0, // Кол-во заказов в базе данных по текущему клиенту;
     };
@@ -332,6 +313,9 @@ const getOrders = async (currentPage) => {
 
 const createOrderCard = (data) => {
   const order = document.createElement("div");
+
+  const isOrderPending = data.order_status_code === "ORDER_PENDING";
+  const orderHref = `/payment/order_id={${data.order_id}}`;
 
   order.className = "order";
   order.innerHTML = `
@@ -363,10 +347,14 @@ const createOrderCard = (data) => {
       <div class="order__title">Сумма:</div>
       <div class="order__title">${data.total_amount} ₽</div>
     </div>
-
-    <button class="order__btn btn w-full btn-reset">
-      Оплатить
-    </button>
+    ${
+      isOrderPending
+        ? ` <button data-href="${orderHref}" class="order__btn btn w-full btn-reset">
+          Оплатить
+        </button>
+      `
+        : ""
+    }
 `;
 
   return order;
@@ -381,11 +369,12 @@ const renderOrders = (data) => {
 
 const initOrders = async (currentPage) => {
   const data = await getOrders(currentPage);
+
   console.log(`orders response data from init orders: ${data}`);
 
   const orders = data.rows;
 
-  if (!orders.length && currentPage === 1) {
+  if (!orders.length && currentPage === 0) {
     const text = document.createElement("div");
     text.innerHTML = `Здесь пока ничего нет. <br> Вперед за покупками!`;
     text.className = "orders-empty";
@@ -408,3 +397,144 @@ ordersUploadBtn.addEventListener("click", async () => {
   await initOrders(currentPage);
   ordersUploadBtn.classList.remove("loading");
 });
+
+// Transactions
+
+const getTransactions = async (currentPage) => {
+  try {
+    const response = await page.executeBackendScenario(
+      params.scenarioTransactions,
+      {
+        client_id: params.clientId.toString(),
+        limit: params.limit,
+        page: currentPage,
+      },
+      {}
+    );
+
+    return response;
+  } catch (error) {
+    console.error("Error getting transactions:», error");
+    return {
+      ok: false,
+      rows: [],
+      total_count: 0, // Кол-во транзакций в базе данных по текущему клиенту;
+    };
+  }
+};
+
+const createTransactionCard = (data) => {
+  const transaction = document.createElement("div");
+  transaction.className = "transaction-card";
+
+  const href = `/payment/transaction_id={${data.transaction_id}}`;
+  transaction.dataset.href = href;
+
+  transaction.innerHTML = `
+   <div class="transaction-card__row">
+      <div class="transaction-card__title">${data.type_name}</div>
+      <div class="transaction-card__price">
+        <span>${data.total_amount} ₽</span>
+        <img
+          src="/arrow_right.svg"
+          alt=""
+          class="transaction-card__icon"
+        />
+      </div>
+    </div>
+    <div class="transaction-card__row">
+      <div class="transaction-card__text">${data.subtype_name}</div>
+      <div class="transaction-card__text">${data.created_at.date.slice(
+        0,
+        10
+      )}</div>
+    </div>
+  `;
+
+  return transaction;
+};
+
+const transactionsContainer = document.querySelector(".transactions-container");
+transactionsContainer.addEventListener("click", (e) => {
+  const transactionCard = e.target.closest(".transaction-card");
+
+  window.location.href = transactionCard.dataset.href;
+});
+
+const renderTransactions = (data) => {
+  for (let i = 0; i < 10; i++) {
+    const transactionCard = createTransactionCard(data[i]);
+    transactionsContainer.appendChild(transactionCard);
+  }
+};
+
+let transactionsPage = 0;
+
+const initTransactions = async (currentPage) => {
+  const data = await getTransactions(currentPage);
+  const transactions = data.rows;
+
+  if (data.rows.length < 10) {
+    transactionsUploadBtn.setAttribute("data-visible", "false");
+  }
+
+  if (!transactions.length && currentPage === 0) {
+    const text = document.createElement("div");
+    text.innerHTML = `Здесь пока ничего нет. <br> Вперед за покупками!`;
+    text.className = "orders-empty";
+    transactionsContainer.appendChild(text);
+  }
+
+  renderTransactions(data.rows);
+};
+
+initTransactions(transactionsPage);
+
+const transactionsUploadBtn = document.querySelector(".transactions-upload");
+transactionsUploadBtn.addEventListener("click", async () => {
+  transactionsPage++;
+  transactionsUploadBtn.classList.add("loading");
+  await initTransactions(transactionsPage);
+  transactionsUploadBtn.classList.remove("loading");
+});
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// Tab
+const tabInit = () => {
+  const tab = document.querySelector(".tab");
+  const panels = tab?.querySelectorAll(".tab__panel");
+  const btns = tab?.querySelectorAll(".tab__btn");
+
+  btns?.forEach((btn, index) => {
+    btn.addEventListener("click", () => {
+      btns.forEach((btn) => btn.classList.remove("active"));
+      btn.classList.add("active");
+      changeTab(index);
+    });
+  });
+
+  const changeTab = (index) => {
+    panels.forEach((panel, i) => {
+      panel.dataset.visible = i === index ? "true" : "false";
+    });
+  };
+};
+
+tabInit();

@@ -7,7 +7,9 @@
 @use "./components/buttons";
 @use "./components/input";
 @use "./components/modal";
+@use "./components/search-form";
 @use "./user";
+@use "./search";
 
 .content {
   padding: 16px 24px 0 24px;
