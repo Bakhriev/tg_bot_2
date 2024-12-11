@@ -32,3 +32,11 @@
 .hidden {
   display: none !important;
 }
+
+@mixin hover {
+  @media (any-hover: hover) and (pointer: fine) {
+    &:hover {
+      @content;
+    }
+  }
+}

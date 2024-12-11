@@ -3,6 +3,7 @@
 @use "./utils/vars";
 @use "./utils/helpers";
 @use "./utils/global";
+@use "./utils/mixins";
 
 @use "./components/buttons";
 @use "./components/input";

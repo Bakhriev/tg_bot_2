@@ -1,3 +1,5 @@
+@use "./utils/mixins" as *;
+
 .search-wrapper {
   padding-top: 24px;
   padding-bottom: 8px;
@@ -29,6 +31,11 @@
 
     border-radius: 10px;
     background: #eaeaea;
+    transition: background-color 150ms ease-in-out;
+
+    @include hover {
+      background-color: #c5c1c1;
+    }
 
     &:active {
       scale: 0.99;
