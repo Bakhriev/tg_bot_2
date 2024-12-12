@@ -8,13 +8,11 @@ const fetchCatalog = async () => {
 };
 
 const searchPage = async () => {
-  const categoryName = document.querySelector("[data-category-name]");
-
   const data = await fetchCatalog();
 
-  console.log(data);
-
+  const categoryName = document.querySelector("[data-category-name]");
   categoryName.textContent = data.category_name;
+
   renderLinks(data.product_groups);
 
   data.product_groups.forEach((group) => {
@@ -69,7 +67,7 @@ const createGroup = (data) => {
 const createCard = (data) => {
   const card = document.createElement("div");
   card.className = "card";
-  console.log(data);
+  console.log("card data:", data);
 
   card.innerHTML = `
    <img src="${data.product_image_url}" alt="" class="card__img" />
@@ -77,10 +75,10 @@ const createCard = (data) => {
     <div class="card__top">
       <div class="card__row">
         <div class="card__text">30 гемов</div>
-        <div class="card__text">249 руб</div>
+        <div class="card__text">${data.product_price} руб</div>
       </div>
       <div class="card__row">
-        <div class="card__name">Brawl Stars</div>
+        <div class="card__name">${data.product_name}</div>
         <div class="card__stars">
           <img src="/public/star.svg" alt="" class="stars__img" />
           <img src="/public/star.svg" alt="" class="stars__img" />
